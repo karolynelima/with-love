@@ -42,7 +42,7 @@
 	border: 1px solid rgba(245, 238, 218, 0.15); // Borda sutil em tom sépia
 	width: 100%;
 	max-width: 1100px; // Aumentar a largura máxima para acomodar as colunas
-	max-height: 85vh; // Limita a altura do container a 85% da altura da tela
+	max-height: 70vh; // Reduzindo um pouco a altura máxima para não crescer tanto
 	animation: fadeInUp 0.8s ease-out forwards; // Animação de entrada
 }
 
@@ -57,6 +57,7 @@
 	flex: 1; // Ocupa a outra metade
 	display: flex;
 	align-items: stretch;
+	min-height: 0; // Impede que o container cresça com o conteúdo
 }
 
 .music-finder-lyrics-display {

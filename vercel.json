@@ -6,7 +6,7 @@
   ],
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/api/(.*)", "dest": "../with-love/api/index.py" },
+    { "src": "/(.*)", "dest": "../with-love/api/index.py" },
     { "src": "/.*", "dest": "/index.html" }
   ]
 }

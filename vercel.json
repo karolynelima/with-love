@@ -1,14 +1,15 @@
 {
   "version": 2,
   "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "dist/with-love/browser" }
-    }
+    { "src": "package.json", "use": "@vercel/static-build", "config": { "distDir": "dist/with-love/browser" } }
   ],
   "routes": [
     { "handle": "filesystem" },
+
+
+    { "src": "/api/(.*)", "dest": "https://with-love-six.vercel.app/$1" },
+
+
     { "src": "/.*", "dest": "/index.html" }
   ]
 }

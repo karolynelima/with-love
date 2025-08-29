@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Birthstone&display=swap');
+
+:host {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  width: 100%;
+  min-height: 100vh;
+  color: #f5eeda;
+  position: relative; // Necessário para o pseudo-elemento de sobreposição
+  z-index: 1;
+
+  // Adicionando o mesmo background da outra página
+  background-image: url("../../assets/images/background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
+  // Esta é a alternativa de alta performance para o filtro sépia.
+  // Criamos uma camada de cor semitransparente sobre a imagem.
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #3f3226; // Um tom sólido de sépia
+    opacity: 0.6; // Ajuste a intensidade do efeito aqui
+    z-index: -1; // Coloca a camada de cor atrás do conteúdo
+  }
+}
+
+.home-container {
+  max-width: 700px;
+  padding: 2rem;
+}
+
+.home-title {
+  font-family: 'Birthstone', cursive;
+  font-size: 7rem; // Aumentei o tamanho para a fonte se destacar
+  font-weight: 400; // Esta fonte funciona melhor com um peso mais leve
+  margin-bottom: 1.2rem;
+  line-height: 1; // Ajuste para fontes cursivas
+}
+
+.home-description {
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #e2dcd3;
+  margin-bottom: 2.5rem;
+}
+
+.home-cta-button {
+  display: inline-block;
+  background: #a5682a;
+  color: #f5eeda;
+  padding: 0.8rem 2rem;
+  border-radius: 2rem;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: background 0.2s ease-in-out, transform 0.2s ease-in-out;
+
+  &:hover {
+    background: #b97b41;
+    transform: translateY(-2px);
+  }
+}

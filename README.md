@@ -1,27 +1,54 @@
-# WithLove
+# With Love
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.11.
+> Breve descrição do projeto. O que ele faz? Para quem ele se destina?
 
-## Development server
+## ✨ Funcionalidades
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+*   Funcionalidade 1
+*   Funcionalidade 2
+*   Funcionalidade 3
 
-## Code scaffolding
+## 🚀 Começando
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Estas instruções permitirão que você obtenha uma cópia do projeto em operação na sua máquina local para fins de desenvolvimento e teste.
 
-## Build
+### Pré-requisitos
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+O que você precisa para instalar o software e como instalá-lo.
 
-## Running unit tests
+```bash
+npm install -g @angular/cli
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Instalação
 
-## Running end-to-end tests
+Um passo a passo que informa como obter um ambiente de desenvolvimento em execução.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```bash
+# Clone o repositório
+git clone https://github.com/seu-usuario/with-love.git
 
-## Further help
+# Entre na pasta do projeto
+cd with-love
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# Instale as dependências
+npm install
+
+# Inicie o servidor de desenvolvimento
+ng serve
+```
+
+Acesse `http://localhost:4200/` no seu navegador.
+
+## 🛠️ Construído com
+
+*   Angular - O framework web utilizado
+*   TypeScript - Linguagem de programação
+
+## 🤝 Contribuindo
+
+Por favor, leia o CONTRIBUTING.md para detalhes sobre nosso código de conduta e o processo para nos enviar pull requests.
+
+## 📄 Licença
+
+Este projeto está licenciado sob a Licença MIT - veja o arquivo LICENSE para mais detalhes.

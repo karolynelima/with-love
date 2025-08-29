@@ -1,0 +1,47 @@
+<div class="music-finder-container">
+	<div class="music-finder-left">
+		<div class="music-finder-brand">with-love •</div>
+		<h1 class="music-finder-title">Find songs<br>you love</h1>
+		<p class="music-finder-desc">
+			Discover new songs or remember the lyrics of the one <br> that won't leave your head.
+		</p>
+		<form class="music-finder-search-form" (ngSubmit)="buscar()">
+			<mat-form-field appearance="outline" class="music-finder-input">
+				<mat-label>Type the word or verse</mat-label>
+					<mat-icon matPrefix>search</mat-icon>
+				<input matInput placeholder="Ex: thank u, next" [(ngModel)]="searchTerm" name="searchTerm" (ngModelChange)="onSearchInput()">
+			</mat-form-field>
+			<button mat-flat-button color="primary" class="music-finder-btn" type="submit" [disabled]="isLoading">
+				<span *ngIf="!isLoading">Search <span>&rarr;</span></span>
+				<span *ngIf="isLoading">Searching...</span>
+			</button>
+		</form>
+		<div class="music-finder-companies-label">TAPTAPTAPTAPTAP</div>
+		<div class="music-finder-companies">
+			<span>TAP</span>
+			<span>TAP</span>
+			<span>TAP</span>
+			<span>TAP</span>
+		</div>
+	</div>
+
+	<div class="music-finder-right">
+		<div class="music-finder-lyrics-display" [class.has-results]="searchResults.length > 0">
+			<div *ngIf="isLoading" class="lyrics-placeholder">
+				<p>Searching...</p>
+			</div>
+
+			<div *ngIf="!isLoading && searchResults.length === 0" class="lyrics-placeholder">
+				<p *ngIf="!hasSearched">The song lyrics will appear here...</p>
+				<p *ngIf="hasSearched">No results found for "{{ searchTerm }}".</p>
+			</div>
+
+			<div *ngFor="let result of searchResults" class="lyrics-card">
+				<h3>{{ result.musica }}</h3>
+				<p class="album-info">Album: {{ result.album }}</p>
+				<pre class="estrofe" [innerHTML]="result.estrofe"></pre>
+			</div>
+		</div>
+	</div>
+</div>
+

@@ -1,0 +1,59 @@
+:host {
+  display: contents;
+}
+
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem 2.5rem;
+  display: flex;
+  justify-content: center; // Espaça os links e o seletor de idioma
+  align-items: center;
+  background: transparent;
+  z-index: 1000;
+}
+
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  color: #c9b79c; // Cor do texto em tom sépia
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: #f5eeda; // Sépia mais claro ao passar o mouse
+  }
+}
+
+.lang-switcher button {
+  background: transparent;
+  border: 1px solid #5c4b37;
+  color: #c9b79c;
+  padding: 0.4rem 0.8rem;
+  margin-left: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: rgba(165, 104, 42, 0.2);
+    color: #f5eeda;
+  }
+
+  &.active {
+    background-color: #a5682a;
+    color: #f5eeda;
+    border-color: #a5682a;
+  }
+}

@@ -1,3 +1,7 @@
-import { Routes } from '@angular/router';
+import { MusicFinderComponent } from './music-finder/music-finder.component';
+import { HomeComponent } from './home/home.component';
 
-export const routes: Routes = [];
+export const routes = [
+	{ path: '', component: HomeComponent },
+	{ path: 'search', component: MusicFinderComponent }
+];

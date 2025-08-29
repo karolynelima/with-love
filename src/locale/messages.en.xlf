@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="pt-BR" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="header.homeLink" datatype="html">
+        <source>HOME</source>
+        <target>HOME</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/header/header.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="header.searchLink" datatype="html">
+        <source>SEARCH</source>
+        <target>SEARCH</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/header/header.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="header.aboutUsLink" datatype="html">
+        <source>ABOUT US</source>
+        <target>ABOUT US</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/header/header.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="header.aboutMeLink" datatype="html">
+        <source>ABOUT ME</source>
+        <target>ABOUT ME</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/header/header.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5384345366926966837" datatype="html">
+        <source> Este é um projeto para encontrar trechos de músicas. Digite uma frase, um verso ou uma palavra e descubra em quais canções ela aparece. </source>
+        <target> This is a project to find song excerpts. Type a phrase, a verse, or a word and discover in which songs it appears. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/home.component.html</context>
+          <context context-type="linenumber">3,5</context>
+        </context-group>
+        <note priority="1" from="description">Description of the project on the home page</note>
+      </trans-unit>
+      <trans-unit id="home.ctaButton" datatype="html">
+        <source>Começar a buscar &rarr;</source>
+        <target>Start searching &rarr;</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/home.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">Call to action button on the home page</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,260 @@
+// Estilo para centralizar o componente na página
+:host {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	min-height: 100vh;
+	padding: 2rem;
+	box-sizing: border-box;
+	color: #f5eeda;
+	position: relative;
+	z-index: 1;
+
+	background-image: url("../../assets/images/background.jpg");
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed; // Mantém o fundo fixo durante a rolagem
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #3f3226; // Um tom sólido de sépia
+		opacity: 0.6; // Ajuste a intensidade do efeito aqui
+		z-index: -1; // Coloca a camada de cor atrás do conteúdo
+	}
+}
+
+// Container principal com duas colunas
+.music-finder-container {
+	display: flex;
+	gap: 2rem;
+	background: rgba(46, 38, 30, 0.7); // Fundo marrom semitransparente
+	backdrop-filter: blur(15px) saturate(120%); // Efeito de vidro fosco
+	border-radius: 1.5rem;
+	padding: 2.5rem;
+	color: #f5eeda; // Cor de texto off-white
+	box-shadow: 0 4px 24px #00000050;
+	border: 1px solid rgba(245, 238, 218, 0.15); // Borda sutil em tom sépia
+	width: 100%;
+	max-width: 1100px; // Aumentar a largura máxima para acomodar as colunas
+	max-height: 85vh; // Limita a altura do container a 85% da altura da tela
+	animation: fadeInUp 0.8s ease-out forwards; // Animação de entrada
+}
+
+// Coluna da esquerda (conteúdo)
+.music-finder-left {
+	flex: 1; // Ocupa metade do espaço
+	padding-right: 2rem; // Espaçamento entre as colunas
+}
+
+// Coluna da direita (letras)
+.music-finder-right {
+	flex: 1; // Ocupa a outra metade
+	display: flex;
+	align-items: stretch;
+}
+
+.music-finder-lyrics-display {
+	width: 100%;
+	height: 100%;
+	// Fundo sutil para a área das letras, para contrastar com o container principal
+	background: rgba(20, 15, 10, 0.3);
+	border-radius: 1rem;
+	border: 2px dashed #5c4b37; // Borda tracejada em tom sépia
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	align-items: center;
+	justify-content: center;
+	padding: 1.5rem;
+	box-sizing: border-box;
+	overflow-y: auto;
+	transition: all 0.2s ease-in-out;
+
+	&.has-results {
+		justify-content: flex-start;
+		border-style: solid;
+		border-color: #4a3f33;
+	}
+
+	// Estilizando a barra de rolagem para um visual mais limpo
+	&::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: transparent; // Fundo da trilha transparente
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: #5c4b37; // Cor da barra em tom sépia
+		border-radius: 4px;
+		border: 2px solid rgba(20, 15, 10, 0.3); // Borda com a cor de fundo para dar espaçamento
+	}
+}
+
+.lyrics-placeholder {
+	color: #c9b79c; // Cor de placeholder em tom sépia
+	font-style: italic;
+	text-align: center;
+}
+
+.lyrics-card .estrofe strong {
+	color: #ffe8c9; // Cor de destaque quente
+	background-color: rgba(165, 104, 42, 0.3); // Fundo de destaque em tom sépia
+	padding: 2px 4px;
+	border-radius: 4px;
+	font-weight: 700;
+}
+
+.lyrics-card {
+	background: #3a2f24; // Fundo do card em tom sépia
+	padding: 1.5rem;
+	border-radius: 0.75rem;
+	border-left: 4px solid #a5682a; // Borda de destaque em tom sépia
+	width: 100%;
+	box-sizing: border-box;
+	opacity: 0;
+	animation: cardEnter 0.5s ease-out forwards;
+
+	// Aplica um atraso escalonado para cada card aparecer em sequência
+	@for $i from 1 through 10 {
+		&:nth-child(#{$i}) {
+			animation-delay: #{$i * 0.1}s;
+		}
+	}
+
+	h3 {
+		margin-top: 0;
+		margin-bottom: 0.5rem;
+		font-size: 1.2rem;
+	}
+
+	.album-info {
+		font-size: 0.9rem;
+		color: #c9b79c; // Cor de texto secundário em tom sépia
+		margin-top: 0;
+		margin-bottom: 1rem;
+	}
+
+	.estrofe {
+		white-space: pre-wrap; // Mantém as quebras de linha
+		font-family: inherit;
+		font-size: 1rem;
+		line-height: 1.6;
+		color: #e6d9c1; // Cor de texto principal do card
+		margin: 0;
+	}
+}
+
+// Estilos para os elementos de texto e formulário (mantidos da versão anterior)
+.music-finder-brand {
+	font-weight: 700;
+	font-size: 1.1rem;
+	letter-spacing: 0.05em;
+	margin-bottom: 2.5rem;
+}
+
+.music-finder-title {
+	font-size: 2.6rem;
+	font-weight: 800;
+	line-height: 1.1;
+	margin-bottom: 1.5rem;
+}
+
+.music-finder-desc {
+	font-size: 1.1rem;
+	color: #c9b79c; // Cor de texto secundário em tom sépia
+	margin-bottom: 2.2rem;
+}
+
+.music-finder-search-form {
+	display: flex;
+	gap: 1rem;
+	align-items: flex-start;
+	margin-bottom: 2.5rem;
+}
+
+.music-finder-input {
+	flex-grow: 1;
+
+	// Ajustando as cores do Angular Material para o tema escuro
+	--mdc-outlined-text-field-container-shape: 2rem;
+	--mat-form-field-container-text-size: 1.1rem;
+	--mdc-outlined-text-field-label-text-size: 1.1rem;
+	--mdc-outlined-text-field-input-text-color: #f5eeda;
+	--mdc-outlined-text-field-label-text-color: #c9b79c;
+	--mdc-outlined-text-field-outline-color: #5c4b37;
+	--mdc-outlined-text-field-hover-outline-color: #8c735a;
+	--mat-form-field-focus-outline-color: #a5682a;
+	--mat-form-field-focus-label-text-color: #a5682a;
+}
+
+.music-finder-btn {
+	background: #a5682a; // Cor de destaque em tom sépia
+	color: #f5eeda; // Cor de texto off-white
+	font-weight: 700;
+	border: none;
+	border-radius: 2rem;
+	padding: 0 2.2rem 0 1.5rem;
+	font-size: 1.1rem;
+	cursor: pointer;
+	box-shadow: 0 2px 8px #0002;
+	margin-bottom: 0;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	transition: background 0.2s, color 0.2s;
+	height: 56px; // Alinha a altura com o campo de input
+	box-sizing: border-box;
+}
+.music-finder-btn:hover {
+	background: #b97b41; // Cor de hover em tom sépia
+}
+
+.music-finder-companies-label {
+	font-size: 0.85rem;
+	color: #c9b79c; // Cor de texto secundário em tom sépia
+	margin-bottom: 0.7rem;
+	letter-spacing: 0.08em;
+	font-weight: 600;
+}
+.music-finder-companies {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1.2rem 1.8rem;
+	font-size: 1.25rem;
+	color: #f5eeda; // Cor de texto off-white
+	opacity: 0.7;
+	font-weight: 700;
+	margin-bottom: 0.5rem;
+}
+
+// Keyframes para a animação de entrada
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+// Keyframes para a animação dos cards de letra
+@keyframes cardEnter {
+	from {
+		opacity: 0;
+		transform: translateY(15px) scale(0.98);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}

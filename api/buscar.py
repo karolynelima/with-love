@@ -1,15 +1,10 @@
-# api/buscar.py
-import os
-import csv
-import re
-import json
+import os, csv, re, json
 
-# --- Carrega CSV uma única vez (cache em memória) ---
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 _CSV_PATH = os.path.join(_SCRIPT_DIR, "ariana_grande_albuns_musicas.csv")
 
 _MUSICAS = []
-with open(_CSV_PATH, mode="r", encoding="utf-8", newline="") as f:
+with open(_CSV_PATH, "r", encoding="utf-8", newline="") as f:
     reader = csv.DictReader(f)
     for row in reader:
         _MUSICAS.append({
@@ -18,57 +13,31 @@ with open(_CSV_PATH, mode="r", encoding="utf-8", newline="") as f:
             "letra":  row.get("Letra", "") or ""
         })
 
-
 def _search(frase: str):
     frase = (frase or "").strip()
     if not frase:
         return []
-
-    # mesma regra: palavra inteira, case-insensitive
     padrao = re.compile(r'\b' + re.escape(frase) + r'\b', re.IGNORECASE)
-    resultados = []
-
+    out = []
     for m in _MUSICAS:
         linhas = (m["letra"] or "").split("\n")
-        estrofes = set()
-
+        achados = set()
         for i, linha in enumerate(linhas):
             if padrao.search(linha):
-                ini = max(0, i - 3)
-                fim = min(len(linhas), i + 4)
+                ini = max(0, i-3); fim = min(len(linhas), i+4)
                 trecho = "\n".join(linhas[ini:fim]).strip()
                 if trecho:
-                    estrofes.add(trecho)
+                    achados.add(trecho)
+        if achados:
+            destacados = [padrao.sub(r"<strong>\\g<0></strong>", e) for e in sorted(achados)]
+            out.append({"album": m["album"], "musica": m["titulo"], "estrofe": "\n\n[...]\n\n".join(destacados)})
+    return out
 
-        if estrofes:
-            # destaca a frase com <strong>, mantendo o comportamento
-            destacados = [padrao.sub(r"<strong>\\g<0></strong>", e) for e in sorted(estrofes)]
-            resultados.append({
-                "album":  m["album"],
-                "musica": m["titulo"],
-                "estrofe": "\n\n[...]\n\n".join(destacados)
-            })
-
-    return resultados
-
-
-# --- Handler para Vercel Python Runtime ---
-# A Vercel chamará esta função para /api/buscar
+# Vercel chama essa função
 def handler(request):
-    # aceita apenas POST, igual ao seu endpoint
     if request.method != "POST":
-        return (
-            json.dumps({"error": "Method Not Allowed"}),
-            405,
-            {"Content-Type": "application/json; charset=utf-8"}
-        )
-
+        return (json.dumps({"error":"Method Not Allowed"}), 405, {"Content-Type":"application/json"})
     data = request.get_json(silent=True) or {}
     frase = data.get("frase", "")
     resp = _search(frase)
-
-    return (
-        json.dumps(resp, ensure_ascii=False),
-        200,
-        {"Content-Type": "application/json; charset=utf-8"}
-    )
+    return (json.dumps(resp, ensure_ascii=False), 200, {"Content-Type":"application/json; charset=utf-8"})

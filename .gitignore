@@ -26,3 +26,5 @@
 .angular/
 coverage/
 *.log
+
+.vercel

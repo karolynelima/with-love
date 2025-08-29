@@ -1,67 +1,82 @@
 import csv
 import re
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS
 
 app = Flask(__name__)
-# Configuração de CORS mais segura, permitindo apenas o seu frontend
-CORS(app, resources={r"/buscar*": {"origins": "https://with-love-six.vercel.app"}})
 
-# Caminho robusto para o arquivo CSV, garantindo que funcione na Vercel
+# === CORS ===
+ALLOWED_ORIGINS = [
+    "http://localhost:4200",           # dev
+    "https://with-love-six.vercel.app" # prod
+]
+CORS(
+    app,
+    resources={r"/buscar*": {"origins": ALLOWED_ORIGINS}},
+    methods=["POST", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"]
+)
+
+# === Healthcheck opcional ===
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+# === CSV ===
 script_dir = os.path.dirname(os.path.abspath(__file__))
 arquivo_csv = os.path.join(script_dir, "ariana_grande_albuns_musicas.csv")
 
-# Carregar músicas do CSV para a memória
 musicas = []
-with open(arquivo_csv, mode="r", encoding="utf-8") as file:
+with open(arquivo_csv, mode="r", encoding="utf-8", newline="") as file:
     reader = csv.DictReader(file)
     for row in reader:
         musicas.append({
-            "album":    row["Álbum"],
-            "titulo":   row["Título da Música"],
-            "letra":    row["Letra"]
+            "album":  row.get("Álbum", ""),
+            "titulo": row.get("Título da Música", ""),
+            "letra":  row.get("Letra", "") or ""
         })
 
-# Rota para buscar músicas (Vercel usará esta função)
-@app.route('/buscar', methods=['POST'])
+# === Endpoint ===
+@app.route("/buscar", methods=["POST", "OPTIONS"])
 def buscar_musicas_por_frase():
-    data = request.json
-    frase = data.get('frase', '').lower()
+    # Preflight CORS (navegador envia antes do POST)
+    if request.method == "OPTIONS":
+        resp = make_response("", 204)
+        return resp
 
+    data = request.get_json(force=True, silent=True) or {}
+    frase = (data.get("frase") or "").strip()
     if not frase:
-        return jsonify([])
+        # Retorna vazio pra UX ficar suave (ou mude para 400 se preferir)
+        return jsonify([]), 200
 
-    resultados = []
     padrao = re.compile(r'\b' + re.escape(frase) + r'\b', re.IGNORECASE)
+    resultados = []
 
     for musica in musicas:
-        letra_original = musica["letra"]
-        linhas_originais = letra_original.split("\n")
-        linhas_lower = [linha.lower() for linha in linhas_originais]
-
+        linhas_originais = (musica["letra"] or "").split("\n")
         estrofes_encontradas = set()
 
-        for i, linha_lower in enumerate(linhas_lower):
-            if padrao.search(linha_lower):
+        for i, linha in enumerate(linhas_originais):
+            if padrao.search(linha):
                 inicio = max(0, i - 3)
                 fim = min(len(linhas_originais), i + 4)
                 estrofe = "\n".join(linhas_originais[inicio:fim]).strip()
-
                 if estrofe:
                     estrofes_encontradas.add(estrofe)
 
         if estrofes_encontradas:
-            estrofes_destacadas = [padrao.sub(r'<strong>\g<0></strong>', estrofe) for estrofe in sorted(list(estrofes_encontradas))]
-            estrofe_completa = "\n\n[...]\n\n".join(estrofes_destacadas)
+            estrofes_destacadas = [
+                padrao.sub(r"<strong>\g<0></strong>", e) for e in sorted(estrofes_encontradas)
+            ]
             resultados.append({
                 "album": musica["album"],
                 "musica": musica["titulo"],
-                "estrofe": estrofe_completa
+                "estrofe": "\n\n[...]\n\n".join(estrofes_destacadas)
             })
 
-    return jsonify(resultados)
+    return jsonify(resultados), 200
 
-# Este bloco só será executado localmente, não na Vercel
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)

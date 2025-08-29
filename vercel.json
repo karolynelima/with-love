@@ -2,11 +2,11 @@
   "version": 2,
   "builds": [
     { "src": "package.json", "use": "@vercel/static-build", "config": { "distDir": "dist/with-love/browser" } },
-    { "src": "../with-love-api/app.py", "use": "@vercel/python" }
+    { "src": "../with-love/api/index.py", "use": "@vercel/python" }
   ],
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/api/(.*)", "dest": "../with-love-api/index.py" },
+    { "src": "/api/(.*)", "dest": "../with-love/api/index.py" },
     { "src": "/.*", "dest": "/index.html" }
   ]
 }

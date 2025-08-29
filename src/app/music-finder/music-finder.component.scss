@@ -259,3 +259,42 @@
 		transform: translateY(0) scale(1);
 	}
 }
+
+// Media Queries para responsividade
+@media (max-width: 992px) {
+	.music-finder-container {
+		flex-direction: column;
+		max-height: none; // Permite que o container cresça verticalmente
+		height: auto;
+		overflow-y: auto; // Adiciona rolagem ao container principal se necessário
+		padding: 1.5rem;
+	}
+
+	.music-finder-left {
+		padding-right: 0; // Remove o espaçamento extra
+		padding-bottom: 2rem; // Adiciona espaçamento na parte inferior
+	}
+
+	.music-finder-right {
+		min-height: 300px; // Garante uma altura mínima para a área de letras
+	}
+}
+
+@media (max-width: 768px) {
+	:host {
+		padding: 1rem;
+	}
+
+	.music-finder-title {
+		font-size: 2rem;
+	}
+
+  .music-finder-brand{
+    padding-top: 1.5rem;
+  }
+
+	.music-finder-search-form {
+		flex-direction: column;
+		align-items: stretch; // Faz o botão ocupar a largura total
+	}
+}

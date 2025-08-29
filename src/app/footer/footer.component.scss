@@ -6,7 +6,7 @@
 .app-footer {
   position: fixed;
   bottom: 0;
-  left: 50%; // Move o início do elemento para o centro
+  left: 80%; // Move o início do elemento para o centro
   transform: translateX(-50%); // Desloca o elemento para a esquerda pela metade de sua própria largura
   padding: 1.5rem;
   box-sizing: border-box;
@@ -38,3 +38,15 @@
   font-weight: 600;
 }
 
+@media (max-width: 768px) {
+	.linkedin-icon{
+    width: 20px;
+    height: 20px;
+  }
+
+  .signature {
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+
+}

@@ -70,9 +70,7 @@
               "buildTarget": "with-love:build:production"
             },
             "development": {
-              "buildTarget": "with-love:build:development"
-            },
-            "options":{
+              "buildTarget": "with-love:build:development",
               "proxyConfig": "proxy.conf.json"
             }
           },

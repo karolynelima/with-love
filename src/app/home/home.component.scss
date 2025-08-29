@@ -70,3 +70,15 @@
     transform: translateY(-2px);
   }
 }
+
+// Media Query para dispositivos móveis
+@media (max-width: 768px) {
+  .home-container {
+    padding: 1.5rem;
+    text-align: left;
+  }
+
+  .home-title {
+    font-size: 4.5rem; // Reduz o tamanho da fonte para telas menores
+  }
+}

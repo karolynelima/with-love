@@ -13,7 +13,7 @@ ALLOWED_ORIGINS = [
 ]
 CORS(
     app,
-    resources={r"/buscar*": {"origins": ALLOWED_ORIGINS}},
+    resources={r"/api/buscar*": {"origins": ALLOWED_ORIGINS}},
     methods=["POST", "OPTIONS"],
     allow_headers=["Content-Type", "Authorization"]
 )
@@ -38,7 +38,7 @@ with open(arquivo_csv, mode="r", encoding="utf-8", newline="") as file:
         })
 
 # === Endpoint ===
-@app.route("/buscar", methods=["POST", "OPTIONS"])
+@app.route("/api/buscar", methods=["POST", "OPTIONS"])
 def buscar_musicas_por_frase():
     # Preflight CORS (navegador envia antes do POST)
     if request.method == "OPTIONS":

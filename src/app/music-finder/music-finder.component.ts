@@ -11,9 +11,9 @@ import { MusicService, SearchResult } from '../music.service';
       transition(':enter', [
         query('.music-finder-left > *, .music-finder-right', [
           style({ opacity: 0, transform: 'translateY(20px)' }),
-          stagger(150, [
-            animate('0.8s cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 1, transform: 'none' }))
-          ])
+          stagger(100, [ // Diminuí o tempo de escalonamento
+            animate('0.7s cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 1, transform: 'none' })) // Diminuí a duração
+          ]),
         ])
       ])
     ])

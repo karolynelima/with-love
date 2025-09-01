@@ -104,12 +104,12 @@
 	width: 100%;
 	box-sizing: border-box;
 	opacity: 0;
-	animation: cardEnter 0.5s ease-out forwards;
+	animation: cardEnter 0.45s cubic-bezier(0.215, 0.61, 0.355, 1) forwards; // Curva de easing mais fluida
 
 	// Aplica um atraso escalonado para cada card aparecer em sequência
 	@for $i from 1 through 10 {
 		&:nth-child(#{$i}) {
-			animation-delay: #{$i * 0.1}s;
+			animation-delay: #{$i * 0.08}s; // Atraso um pouco menor
 		}
 	}
 
@@ -230,7 +230,7 @@
 @keyframes cardEnter {
 	from {
 		opacity: 0;
-		transform: translateY(15px) scale(0.98);
+		transform: translateY(20px) scale(0.97); // Efeito de entrada mais pronunciado
 	}
 	to {
 		opacity: 1;

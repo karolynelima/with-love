@@ -7,9 +7,10 @@
   <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel"/>
 </p>
 
-> Sabe quando você tem um trecho de uma música da Ariana Grande na cabeça mas não consegue lembrar o nome? Este projeto resolve isso! "With Love" é uma aplicação web que permite aos fãs encontrar rapidamente em quais músicas e álbuns uma determinada frase ou palavra aparece.
+> Projeto inicialmente feito a pedidos da minha amada para ajuda-la a compor questões para provas escolares da disciplina de língua inglesa onde ela utiliza da ludicidade das músicas para os ensinamentos do idioma.
+> A partir de um projeto onde o foco são as músicas da cantora Taylor Swift eu o tomei como base e construí este projeto onde a estrela é a cantora Ariana Grande pois é a cantora preferida da minha namorada.
 
-**[✨ Veja o projeto ao vivo! ✨](https://with-love-six.vercel.app)**
+**[✨ Veja o projeto ao vivo! ✨](https://with-love-seven.vercel.app)**
 
 ## ✨ Funcionalidades
 

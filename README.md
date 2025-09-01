@@ -1,12 +1,22 @@
-# With Love
+# With Love - Buscador de Letras da Ariana Grande 🎤
 
-> Breve descrição do projeto. O que ele faz? Para quem ele se destina?
+<p align="center">
+  <img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" alt="Angular"/>
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
+  <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" alt="Flask"/>
+  <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel"/>
+</p>
+
+> Sabe quando você tem um trecho de uma música da Ariana Grande na cabeça mas não consegue lembrar o nome? Este projeto resolve isso! "With Love" é uma aplicação web que permite aos fãs encontrar rapidamente em quais músicas e álbuns uma determinada frase ou palavra aparece.
+
+**[✨ Veja o projeto ao vivo! ✨](https://with-love-six.vercel.app)**
 
 ## ✨ Funcionalidades
 
-*   Funcionalidade 1
-*   Funcionalidade 2
-*   Funcionalidade 3
+*   **Busca Inteligente:** Pesquise por qualquer palavra ou frase.
+*   **Contexto Rápido:** Veja o trecho exato da letra onde a busca foi encontrada.
+*   **Resultados Completos:** Identifique o nome da música e o álbum correspondente.
+*   **Interface Limpa:** Uma experiência de usuário simples e direta.
 
 ## 🚀 Começando
 
@@ -14,7 +24,9 @@ Estas instruções permitirão que você obtenha uma cópia do projeto em opera�
 
 ### Pré-requisitos
 
-O que você precisa para instalar o software e como instalá-lo.
+*   [Node.js](https://nodejs.org/) (versão 18 ou superior)
+*   [Angular CLI](https://angular.io/cli) (`npm install -g @angular/cli`)
+*   Python (versão 3.8 ou superior)
 
 ```bash
 npm install -g @angular/cli

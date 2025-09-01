@@ -1,0 +1,41 @@
+// src/app/styles/_buttons.scss
+
+@mixin cta-button {
+  // Estrutura e aparência
+  background: transparent;
+  color: #f5eeda;
+  border: 3px solid #a5682a;
+  border-radius: 2rem;
+  padding: 0.8rem 2rem;
+
+  // Tipografia
+  font-family: inherit; // Garante que herde a fonte do corpo
+  font-size: 1.1rem;
+  font-weight: 700; // Um peso mais forte para destaque
+  text-decoration: none; // Remove sublinhado de links
+  letter-spacing: 1px;
+
+  // Comportamento e Acessibilidade
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+
+  // Transições e Efeitos
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #a5682a;
+    transform: translateY(-2px);
+  }
+
+  &:focus {
+    background: transparent; // Remove o preenchimento azul
+    outline: none;           // Remove o contorno padrão
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 3px rgba(165, 104, 42, 0.4);
+  }
+}
+

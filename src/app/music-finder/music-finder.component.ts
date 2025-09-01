@@ -1,10 +1,23 @@
 import { Component } from '@angular/core';
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 import { MusicService, SearchResult } from '../music.service';
 
 @Component({
   selector: 'app-music-finder',
   templateUrl: './music-finder.component.html',
-  styleUrls: ['./music-finder.component.scss']
+  styleUrls: ['./music-finder.component.scss'],
+  animations: [
+    trigger('pageAnimations', [
+      transition(':enter', [
+        query('.music-finder-left > *, .music-finder-right', [
+          style({ opacity: 0, transform: 'translateY(20px)' }),
+          stagger(150, [
+            animate('0.8s cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 1, transform: 'none' }))
+          ])
+        ])
+      ])
+    ])
+  ]
 })
 export class MusicFinderComponent {
   searchTerm: string = '';
@@ -38,4 +51,3 @@ export class MusicFinderComponent {
 
 
 }
-

@@ -8,7 +8,7 @@ import { trigger, transition, style, animate, query, stagger } from '@angular/an
   animations: [
     trigger('pageAnimations', [
       transition(':enter', [
-        query('.home-title, .home-description, .home-cta-button', [
+        query('.home-title, .home-description, .home-cta-button, .home-subtitle', [
           style({ opacity: 0, transform: 'translateY(30px)' }),
           stagger(350, [
             animate('1.2s cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 1, transform: 'none' }))

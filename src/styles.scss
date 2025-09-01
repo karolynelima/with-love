@@ -1,9 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { 
-  margin: 0; 
-  font-family: Roboto, "Space Mono", monospace; 
+body {
+  margin: 0;
+  font-family: Roboto, "Space Mono", monospace;
   display: flex;
   flex-direction: column;
 }
@@ -17,4 +17,6 @@ app-root {
 main {
   flex: 1;
 }
+
+
 

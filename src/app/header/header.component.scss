@@ -26,9 +26,8 @@
   text-decoration: none;
   font-weight: 600;
   font-size: 1rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
   transition: color 0.2s ease-in-out;
+  letter-spacing: 0.1rem;
 
   &:hover {
     color: #f5eeda; // Sépia mais claro ao passar o mouse
@@ -60,6 +59,7 @@
 
 
 @media (max-width: 768px) {
+
   .nav-link {
     font-size: 0.9rem;
   }

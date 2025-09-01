@@ -1,0 +1,36 @@
+:host {
+  display: block; // Garante que o componente raiz se comporte como um bloco.
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; // O contêiner ocupa no mínimo a altura total da tela.
+  position: relative; // Necessário para o posicionamento do pseudo-elemento de background.
+  z-index: 0; // Cria um novo contexto de empilhamento.
+
+  // O background agora é aplicado aqui, no contêiner principal.
+  // O caminho do arquivo de imagem foi ajustado.
+  background-image: url("../assets/images/background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
+  // Camada de sobreposição para o efeito sépia.
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #3f3226; // Um tom sólido de sépia
+    opacity: 0.6; // Ajuste a intensidade do efeito aqui
+    z-index: -1; // Coloca a camada de cor atrás do conteúdo do .app-container
+  }
+}
+
+.main-content {
+  flex: 1 0 auto; // Faz o conteúdo principal crescer e ocupar o espaço disponível.
+}
+

@@ -4,14 +4,14 @@
 }
 
 .app-footer {
-  position: fixed;
-  bottom: 0;
-  left: 80%; // Move o início do elemento para o centro
-  transform: translateX(-50%); // Desloca o elemento para a esquerda pela metade de sua própria largura
-  padding: 1.5rem;
+  /* Removemos o posicionamento fixo para que o footer siga o fluxo da página */
+  /* A propriedade 'margin-top: auto' fará com que ele seja empurrado para o final do contêiner flex pai */
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end; /* Alinha o link à direita em desktop, similar ao posicionamento anterior */
+  padding: 1.5rem 2.5rem; /* Ajustado para consistência com o header */
   box-sizing: border-box;
   background: transparent;
-  z-index: 1000; // Garante que fique por cima de outros elementos
 }
 
 .footer-link {
@@ -39,6 +39,12 @@
 }
 
 @media (max-width: 768px) {
+  .app-footer {
+    // Em telas menores, centralizamos o footer e ajustamos o padding.
+    justify-content: center; /* Centraliza em telas menores */
+    padding: 1rem;
+  }
+
 	.linkedin-icon{
     width: 20px;
     height: 20px;

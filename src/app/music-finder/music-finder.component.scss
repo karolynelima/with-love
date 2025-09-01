@@ -1,32 +1,15 @@
+@import '../styles/buttons';
+
 // Estilo para centralizar o componente na página
 :host {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 100%;
-	min-height: 100vh;
-	padding: 2rem;
+	padding: 6rem 2rem;
 	box-sizing: border-box;
 	color: #f5eeda;
-	position: relative;
-	z-index: 1;
 
-	background-image: url("../../assets/images/background.jpg");
-	background-size: cover;
-	background-position: center;
-	background-attachment: fixed; // Mantém o fundo fixo durante a rolagem
-
-	&::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background-color: #3f3226; // Um tom sólido de sépia
-		opacity: 0.6; // Ajuste a intensidade do efeito aqui
-		z-index: -1; // Coloca a camada de cor atrás do conteúdo
-	}
+  min-height: 100vh; // ocupa a altura total da tela
 }
 
 // Container principal com duas colunas
@@ -43,7 +26,7 @@
 	width: 100%;
 	max-width: 1100px; // Aumentar a largura máxima para acomodar as colunas
 	max-height: 70vh; // Reduzindo um pouco a altura máxima para não crescer tanto
-	animation: fadeInUp 0.8s ease-out forwards; // Animação de entrada
+  letter-spacing: 0.1rem;
 }
 
 // Coluna da esquerda (conteúdo)
@@ -157,7 +140,6 @@
 .music-finder-brand {
 	font-weight: 700;
 	font-size: 1.1rem;
-	letter-spacing: 0.05em;
 	margin-bottom: 2.5rem;
 }
 
@@ -198,32 +180,27 @@
 }
 
 .music-finder-btn {
-	background: #a5682a; // Cor de destaque em tom sépia
-	color: #f5eeda; // Cor de texto off-white
-	font-weight: 700;
-	border: none;
-	border-radius: 2rem;
+	@include cta-button;
+
+	// Estilos específicos para este botão, que sobrescrevem ou complementam o mixin
 	padding: 0 2.2rem 0 1.5rem;
-	font-size: 1.1rem;
-	cursor: pointer;
-	box-shadow: 0 2px 8px #0002;
-	margin-bottom: 0;
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
-	transition: background 0.2s, color 0.2s;
 	height: 56px; // Alinha a altura com o campo de input
-	box-sizing: border-box;
+
+  text-align: center;
+
 }
-.music-finder-btn:hover {
-	background: #b97b41; // Cor de hover em tom sépia
+
+.mat-mdc-unelevated-button:not(:disabled) {
+    background-color: transparent;
 }
 
 .music-finder-companies-label {
 	font-size: 0.85rem;
 	color: #c9b79c; // Cor de texto secundário em tom sépia
 	margin-bottom: 0.7rem;
-	letter-spacing: 0.08em;
 	font-weight: 600;
 }
 .music-finder-companies {
@@ -279,11 +256,15 @@
 	.music-finder-right {
 		min-height: 300px; // Garante uma altura mínima para a área de letras
 	}
+
+  .lyrics-placeholder{
+    padding: 5rem;
+  }
 }
 
 @media (max-width: 768px) {
 	:host {
-		padding: 1rem;
+		padding: 6rem 1rem 5rem;
 	}
 
 	.music-finder-title {
@@ -298,4 +279,17 @@
 		flex-direction: column;
 		align-items: stretch; // Faz o botão ocupar a largura total
 	}
+
+  mat-label{
+    font-size: 0.9rem;
+    align-items: left;
+    margin-right: 1rem;
+  }
+}
+
+@media (max-width: 350px) {
+	.music-finder-lyrics-display{
+    padding: 0;
+  }
+
 }

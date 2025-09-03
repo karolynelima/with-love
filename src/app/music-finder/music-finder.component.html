@@ -38,8 +38,11 @@
 				<h3>{{ result.musica }}</h3>
 				<p class="album-info">Album: {{ result.album }}</p>
 				<pre class="estrofe" [innerHTML]="result.estrofe"></pre>
+				<div class="card-footer">
+					<!-- Adiciona a referência ABNT, usando innerHTML para renderizar o <strong> -->
+					<small class="abnt-reference" [innerHTML]="result.referencia_abnt"></small>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
-

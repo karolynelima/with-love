@@ -53,7 +53,9 @@ def carregar_musicas() -> ListaMusicas:
                 musicas_carregadas.append({
                     "album":  row.get("Álbum", ""),
                     "titulo": row.get("Título da Música", ""),
-                    "letra":  row.get("Letra", "") or ""
+                    "letra":  row.get("Letra", "") or "",
+                    # Adicionado para a referência ABNT. O CSV precisa ter essa coluna.
+                    "ano":    row.get("Ano", "")
                 })
     except FileNotFoundError:
         # Em um app de produção, logar este erro seria importante
@@ -77,6 +79,27 @@ def encontrar_estrofes(musica: Musica, padrao: re.Pattern) -> Set[str]:
                 estrofes_encontradas.add(estrofe)
     return estrofes_encontradas
 
+def gerar_referencia_abnt(musica: Musica) -> str:
+    """Gera uma referência bibliográfica no formato ABNT para uma música."""
+    interprete = "GRANDE, Ariana"
+    # Título da música em maiúsculas, conforme ABNT
+    titulo_musica = musica.get("titulo", "TÍTULO DESCONHECIDO").upper()
+    titulo_album = musica.get("album", "")
+    # Ano do álbum. 's.d.' (sine data) se não encontrado.
+    ano = musica.get("ano", "s.d.")
+
+    # Formato ABNT para faixa de álbum (NBR 6023:2018).
+    # Usamos [S.l.] (sine loco) para local e 'Republic Records' como gravadora padrão.
+    # O título do álbum vai em negrito, que será renderizado como <strong> no frontend.
+    if titulo_album:
+        return (
+            f"{interprete}. {titulo_musica}. In: {interprete}. "
+            f"<strong>{titulo_album}</strong>. [S.l.]: Republic Records, {ano}."
+        )
+
+    # Formato para single (música não contida em álbum)
+    return f"{interprete}. {titulo_musica}. [S.l.]: Republic Records, {ano}."
+
 def formatar_resultados(musica: Musica, estrofes: Set[str], padrao: re.Pattern) -> ResultadoBusca:
     """Formata as estrofes encontradas para a resposta da API."""
     estrofes_destacadas = [
@@ -85,7 +108,8 @@ def formatar_resultados(musica: Musica, estrofes: Set[str], padrao: re.Pattern) 
     return {
         "album": musica["album"],
         "musica": musica["titulo"],
-        "estrofe": "\n\n[...]\n\n".join(estrofes_destacadas)
+        "estrofe": "\n\n[...]\n\n".join(estrofes_destacadas),
+        "referencia_abnt": gerar_referencia_abnt(musica)
     }
 
 # === Endpoints da API ===

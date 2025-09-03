@@ -214,6 +214,20 @@
 	margin-bottom: 0.5rem;
 }
 
+.card-footer {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #eee;
+  text-align: right;
+}
+
+.abnt-reference {
+  font-size: 0.8rem;
+  color: #6c757d; /* Um cinza suave */
+  font-style: italic;
+}
+
+
 // Keyframes para a animação de entrada
 @keyframes fadeInUp {
 	from {

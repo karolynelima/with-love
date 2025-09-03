@@ -1,8 +1,8 @@
 import csv
 import os
 import re
+import string
 from functools import lru_cache
-from typing import Dict, List, Set, Any, Tuple
 
 from flask import Flask, jsonify, make_response, request
 from flask.wrappers import Response
@@ -10,10 +10,10 @@ from flask_cors import CORS
 from werkzeug.exceptions import BadRequest
 
 # Tipos para melhor legibilidade
-Musica = Dict[str, str]
-ListaMusicas = List[Musica]
-ResultadoBusca = Dict[str, str]
-ListaResultados = List[ResultadoBusca]
+Musica = dict[str, str]
+ListaMusicas = list[Musica]
+ResultadoBusca = dict[str, str]
+ListaResultados = list[ResultadoBusca]
 
 app = Flask(__name__)
 
@@ -23,7 +23,7 @@ app = Flask(__name__)
 #     ALLOWED_ORIGINS = origins_str.split(",")
 ALLOWED_ORIGINS = [
     "http://localhost:4200",           # dev
-    "https://with-love-six.vercel.app" # prod
+    "https://with-love-seven.vercel.app" # prod
 ]
 
 # === CORS ===
@@ -43,7 +43,7 @@ def carregar_musicas() -> ListaMusicas:
     Usa lru_cache para garantir que o arquivo seja lido apenas uma vez.
     """
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    arquivo_csv = os.path.join(script_dir, "ariana_grande_albuns_musicas.csv")
+    arquivo_csv = os.path.join(script_dir, "ariana_grande_albuns_musicas_com_ano.csv")
 
     musicas_carregadas: ListaMusicas = []
     try:
@@ -51,8 +51,8 @@ def carregar_musicas() -> ListaMusicas:
             reader = csv.DictReader(file)
             for row in reader:
                 musicas_carregadas.append({
-                    "album":  row.get("Álbum", ""),
-                    "titulo": row.get("Título da Música", ""),
+                    "album":  row.get("Álbum", "Álbum Desconhecido") or "Álbum Desconhecido",
+                    "titulo": row.get("Título da Música", "Título Desconhecido") or "Título Desconhecido",
                     "letra":  row.get("Letra", "") or "",
                     # Adicionado para a referência ABNT. O CSV precisa ter essa coluna.
                     "ano":    row.get("Ano", "")
@@ -64,20 +64,25 @@ def carregar_musicas() -> ListaMusicas:
     return musicas_carregadas
 
 # === Lógica de Busca ===
-def encontrar_estrofes(musica: Musica, padrao: re.Pattern) -> Set[str]:
-    """Encontra e retorna os trechos de letra que correspondem ao padrão."""
-    linhas_originais = (musica.get("letra", "") or "").split("\n")
-    estrofes_encontradas: Set[str] = set()
+def normalizar_texto(texto: str) -> str:
+    """Remove pontuações e converte para minúsculas para uma busca flexível."""
+    texto_lower = texto.lower()
+    return texto_lower.translate(str.maketrans('', '', string.punctuation))
 
-    for i, linha in enumerate(linhas_originais):
-        if padrao.search(linha):
-            # Captura 3 linhas de contexto antes e 3 depois da linha encontrada
-            inicio = max(0, i - 3)
-            fim = min(len(linhas_originais), i + 4)
-            estrofe = "\n".join(linhas_originais[inicio:fim]).strip()
-            if estrofe:
-                estrofes_encontradas.add(estrofe)
-    return estrofes_encontradas
+def normalizar_flexivel(texto: str) -> str:
+    """Remove pontuações e espaços para uma busca ainda mais flexível."""
+    return re.sub(r'[\W_]+', '', texto.lower())
+
+def encontrar_estrofe(letra_original: str, frase_busca: str) -> str | None:
+    """Encontra a primeira estrofe que contém a frase de busca, usando texto normalizado."""
+    frase_busca_flexivel = normalizar_flexivel(frase_busca)
+
+    for linha in letra_original.split('\n'):
+        linha_flexivel = normalizar_flexivel(linha)
+        if frase_busca_flexivel in linha_flexivel:
+            return linha.strip() # Retorna apenas a linha original onde a correspondência foi encontrada
+
+    return None
 
 def gerar_referencia_abnt(musica: Musica) -> str:
     """Gera uma referência bibliográfica no formato ABNT para uma música."""
@@ -86,29 +91,29 @@ def gerar_referencia_abnt(musica: Musica) -> str:
     titulo_musica = musica.get("titulo", "TÍTULO DESCONHECIDO").upper()
     titulo_album = musica.get("album", "")
     # Ano do álbum. 's.d.' (sine data) se não encontrado.
-    ano = musica.get("ano", "s.d.")
+    ano = musica.get("ano") or "s.d."
 
     # Formato ABNT para faixa de álbum (NBR 6023:2018).
     # Usamos [S.l.] (sine loco) para local e 'Republic Records' como gravadora padrão.
     # O título do álbum vai em negrito, que será renderizado como <strong> no frontend.
     if titulo_album:
+        # Destaca o nome do álbum na referência
+        referencia_album_destacado = re.sub(f'({re.escape(titulo_album)})', r'<strong>\1</strong>', titulo_album, flags=re.IGNORECASE)
         return (
             f"{interprete}. {titulo_musica}. In: {interprete}. "
-            f"<strong>{titulo_album}</strong>. [S.l.]: Republic Records, {ano}."
+            f"{referencia_album_destacado}. [S.l.]: Republic Records, {ano}."
         )
 
     # Formato para single (música não contida em álbum)
     return f"{interprete}. {titulo_musica}. [S.l.]: Republic Records, {ano}."
 
-def formatar_resultados(musica: Musica, estrofes: Set[str], padrao: re.Pattern) -> ResultadoBusca:
+def formatar_resultado(musica: Musica, estrofe: str, frase_busca: str) -> ResultadoBusca:
     """Formata as estrofes encontradas para a resposta da API."""
-    estrofes_destacadas = [
-        padrao.sub(r"<strong>\g<0></strong>", e) for e in sorted(list(estrofes))
-    ]
+    estrofe_destacada = re.sub(f'({re.escape(frase_busca)})', r'<strong>\1</strong>', estrofe, flags=re.IGNORECASE)
     return {
-        "album": musica["album"],
+        "album": musica["album"], # Mantém o case original do álbum
         "musica": musica["titulo"],
-        "estrofe": "\n\n[...]\n\n".join(estrofes_destacadas),
+        "estrofe": estrofe_destacada,
         "referencia_abnt": gerar_referencia_abnt(musica)
     }
 
@@ -138,14 +143,18 @@ def buscar_musicas_por_frase() -> Response:
     if not todas_as_musicas:
         return jsonify({"erro": "Base de dados de músicas não pôde ser carregada."}), 500
 
-    padrao = re.compile(r'\b' + re.escape(frase) + r'\b', re.IGNORECASE)
+    frase_busca_flexivel = normalizar_flexivel(frase)
     resultados: ListaResultados = []
 
     for musica in todas_as_musicas:
-        estrofes_encontradas = encontrar_estrofes(musica, padrao)
-        if estrofes_encontradas:
-            resultado_formatado = formatar_resultados(musica, estrofes_encontradas, padrao)
-            resultados.append(resultado_formatado)
+        letra_original = musica.get("letra", "")
+        letra_flexivel = normalizar_flexivel(letra_original)
+
+        if frase_busca_flexivel in letra_flexivel:
+            estrofe_encontrada = encontrar_estrofe(letra_original, frase)
+            if estrofe_encontrada:
+                resultado_formatado = formatar_resultado(musica, estrofe_encontrada, frase)
+                resultados.append(resultado_formatado)
 
     return jsonify(resultados), 200
 

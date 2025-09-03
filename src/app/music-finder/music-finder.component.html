@@ -9,7 +9,7 @@
 			<mat-form-field appearance="outline" class="music-finder-input">
 				<mat-label>Type the word or verse</mat-label>
 					<mat-icon matPrefix>search</mat-icon>
-				<input matInput placeholder="Ex: thank u, next" [(ngModel)]="searchTerm" name="searchTerm" (ngModelChange)="onSearchInput()">
+				<input matInput placeholder="Ex: side to side" [(ngModel)]="searchTerm" name="searchTerm" (ngModelChange)="onSearchInput()">
 			</mat-form-field>
 			<button mat-flat-button color="primary" class="music-finder-btn" type="submit" [disabled]="isLoading">
 				<span *ngIf="!isLoading">Search </span>

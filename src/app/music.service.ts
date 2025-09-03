@@ -6,6 +6,7 @@ export interface SearchResult {
   album: string;
   musica: string;
   estrofe: string;
+  referencia_abnt: string;
 }
 
 @Injectable({

@@ -59,8 +59,8 @@ def carregar_musicas() -> ListaMusicas:
                 })
     except FileNotFoundError:
         # Em um app de produção, logar este erro seria importante
-        print(f"Erro: Arquivo CSV não encontrado em {arquivo_csv}")
-        return []
+        # Levanta uma exceção para que o chamador saiba que o recurso não está disponível.
+        raise RuntimeError(f"Arquivo de dados essencial não encontrado: {arquivo_csv}")
     return musicas_carregadas
 
 # === Lógica de Busca ===
@@ -139,9 +139,12 @@ def buscar_musicas_por_frase() -> Response:
     if not frase:
         return jsonify([]), 200
 
-    todas_as_musicas = carregar_musicas()
-    if not todas_as_musicas:
-        return jsonify({"erro": "Base de dados de músicas não pôde ser carregada."}), 500
+    try:
+        todas_as_musicas = carregar_musicas()
+    except RuntimeError as e:
+        # Se o arquivo CSV não pôde ser carregado, o serviço está indisponível.
+        print(f"Erro crítico ao carregar músicas: {e}")
+        return jsonify({"erro": "O serviço está temporariamente indisponível. A base de dados de músicas não pôde ser carregada."}), 503
 
     frase_busca_flexivel = normalizar_flexivel(frase)
     resultados: ListaResultados = []

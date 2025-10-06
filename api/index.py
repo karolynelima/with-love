@@ -54,12 +54,10 @@ def carregar_musicas() -> ListaMusicas:
                     "album":  row.get("Álbum", "Álbum Desconhecido") or "Álbum Desconhecido",
                     "titulo": row.get("Título da Música", "Título Desconhecido") or "Título Desconhecido",
                     "letra":  row.get("Letra", "") or "",
-                    # Adicionado para a referência ABNT. O CSV precisa ter essa coluna.
                     "ano":    row.get("Ano", "")
                 })
     except FileNotFoundError:
-        # Em um app de produção, logar este erro seria importante
-        # Levanta uma exceção para que o chamador saiba que o recurso não está disponível.
+
         raise RuntimeError(f"Arquivo de dados essencial não encontrado: {arquivo_csv}")
     return musicas_carregadas
 
@@ -74,13 +72,20 @@ def normalizar_flexivel(texto: str) -> str:
     return re.sub(r'[\W_]+', '', texto.lower())
 
 def encontrar_estrofe(letra_original: str, frase_busca: str) -> str | None:
-    """Encontra a primeira estrofe que contém a frase de busca, usando texto normalizado."""
+    """
+    Encontra a primeira estrofe que contém a frase de busca.
+    Uma estrofe é considerada um bloco de texto separado por uma linha em branco.
+    """
     frase_busca_flexivel = normalizar_flexivel(frase_busca)
 
-    for linha in letra_original.split('\n'):
-        linha_flexivel = normalizar_flexivel(linha)
-        if frase_busca_flexivel in linha_flexivel:
-            return linha.strip() # Retorna apenas a linha original onde a correspondência foi encontrada
+    # Divide a letra em estrofes (blocos separados por linhas em branco)
+    estrofes = letra_original.split('\n\n')
+
+    for estrofe in estrofes:
+        estrofe_flexivel = normalizar_flexivel(estrofe)
+        if frase_busca_flexivel in estrofe_flexivel:
+            # Retorna a estrofe original, preservando as quebras de linha internas
+            return estrofe.strip()
 
     return None
 

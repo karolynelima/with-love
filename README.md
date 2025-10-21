@@ -7,8 +7,9 @@
   <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel"/>
 </p>
 
-> Projeto inicialmente feito a pedidos da minha amada para ajuda-la a compor questões para provas escolares da disciplina de língua inglesa onde ela utiliza da ludicidade das músicas para os ensinamentos do idioma.
-> A partir de um projeto onde o foco são as músicas da cantora Taylor Swift eu o tomei como base e construí este projeto onde a estrela é a cantora Ariana Grande pois é a cantora preferida da minha namorada.
+Este projeto inovador é um sistema de busca e contextualização de letras de músicas, focado inteiramente na discografia da cantora Ariana Grande. Originalmente concebido para apoiar a criação de materiais didáticos lúdicos para o ensino de Língua Inglesa, ele transforma as canções da artista favorita em uma poderosa ferramenta educacional.
+
+O objetivo principal é auxiliar professores, especificamente em contextos onde a ludicidade da música é empregada para facilitar o aprendizado do idioma.
 
 **[✨ Veja o projeto ao vivo! ✨](https://with-love-seven.vercel.app)**
 
